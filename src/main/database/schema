@@ -1,0 +1,26 @@
+SET client_min_messages TO WARNING;
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+GRANT ALL ON SCHEMA public TO postgres;
+
+CREATE TABLE Currencies (
+    id CHAR[3] PRIMARY KEY
+);
+
+CREATE TABLE AuctionItem (
+    id BIGINT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    startPrice FLOAT8 NOT NULL,
+    currency CHAR[3] REFERENCES Currencies,
+    startTime TIME NOT NULL,
+    endTime TIME NOT NULL,
+    date DATE NOT NULL
+);
+
+CREATE TABLE Images (
+    itemID BIGINT REFERENCES AuctionItem(id),
+    imageID BIGINT NOT NULL,
+    image BYTEA,
+    PRIMARY KEY (itemID, imageID)
+);
