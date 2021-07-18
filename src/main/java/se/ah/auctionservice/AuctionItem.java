@@ -15,16 +15,16 @@ import java.time.LocalTime;
 @Entity
 public class AuctionItem {
     @Id
-    @Column(name="id")
+    @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
     long id;
 
-    @Column(name="name")
+    @Column
     @Getter @Setter
     String name;
 
-    @Column(name = "description")
+    @Column
     @Getter @Setter
     String description;
 
