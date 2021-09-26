@@ -1,4 +1,4 @@
-package se.ah.auctionservice;
+package se.ah.auctionservice.JPAServices;
 
 import se.ah.auctionservice.JPAEntities.AuctionItem;
 

@@ -48,7 +48,21 @@ public class AuctionItem {
     @Getter @Setter
     Date date;
 
-    boolean isActive() {
+    public AuctionItem(String name, String description, double startPrice, String currency, Time startTime,
+                       Time endTime, Date date) {
+        this.name = name;
+        this.description = description;
+        this.startPrice = startPrice;
+        this.currency = currency;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.date = date;
+    }
+
+    public AuctionItem() {
+    }
+
+    public boolean isActive() {
         return Time.valueOf(LocalTime.now()).before(endTime);
     }
 

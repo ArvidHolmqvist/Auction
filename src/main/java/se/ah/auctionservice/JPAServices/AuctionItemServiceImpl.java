@@ -1,8 +1,9 @@
-package se.ah.auctionservice;
+package se.ah.auctionservice.JPAServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.ah.auctionservice.JPAEntities.AuctionItem;
+import se.ah.auctionservice.JPAServices.AuctionItemService;
 import se.ah.auctionservice.Repositories.AuctionItemRepository;
 
 import java.util.List;

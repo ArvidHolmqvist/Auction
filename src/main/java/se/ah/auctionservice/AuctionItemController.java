@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.ah.auctionservice.JPAEntities.AuctionItem;
+import se.ah.auctionservice.JPAServices.AuctionItemService;
 
 import java.util.List;
 
@@ -19,12 +20,12 @@ public class AuctionItemController {
         this.service = service;
     }
 
-    @GetMapping("/AuctionItems")
+    @GetMapping("/AuctionItems/all")
     public ResponseEntity<List<AuctionItem>> getAllAuctionItems(){
         return new ResponseEntity<>(service.getAllAuctionItems(), HttpStatus.OK) ;
     }
 
-    @GetMapping("/AuctionItems")
+    @GetMapping("/AuctionItems/boolean")
     public ResponseEntity<List<AuctionItem>> getAllActiveAuctionItems(@RequestParam boolean isActive){
         if (isActive){
             return new ResponseEntity<>(service.getAllActiveAuctionItems(), HttpStatus.OK);
@@ -33,8 +34,8 @@ public class AuctionItemController {
         }
     }
 
-    @GetMapping("/AuctionItems")
-    public ResponseEntity<AuctionItem> getAuctionItemByID(@RequestParam long id){
+    @GetMapping("/AuctionItems/{id}")
+    public ResponseEntity<AuctionItem> getAuctionItemByID(@PathVariable long id){
         return new ResponseEntity<>(service.getAuctionItemById(id), HttpStatus.OK);
     }
 

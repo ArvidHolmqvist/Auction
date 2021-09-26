@@ -6,7 +6,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import se.ah.auctionservice.JPAEntities.AuctionItem;
 import se.ah.auctionservice.Repositories.AuctionItemRepository;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.Optional;
 
 @SpringBootApplication
 public class AuctionServiceApplication {
@@ -21,36 +26,36 @@ public class AuctionServiceApplication {
     public CommandLineRunner demo(AuctionItemRepository repository) {
         return (args) -> {
 
-            repository.save();
-            repository.save();
-            repository.save();
-            repository.save();
-            repository.save();
+            repository.save(new AuctionItem("item 1", "description of item 1", 100,
+                    "USD", new Time(System.currentTimeMillis()), new Time(System.currentTimeMillis() + 3600000),
+                    new Date(System.currentTimeMillis())));
+            repository.save(new AuctionItem("item 2", "description of item 2", 12,
+                    "USD", new Time(System.currentTimeMillis()), new Time(System.currentTimeMillis() + 3600000),
+                    new Date(System.currentTimeMillis())));
+            repository.save(new AuctionItem("item 3", "description of item 3", 50,
+                    "USD", new Time(System.currentTimeMillis()), new Time(System.currentTimeMillis() + 3600000),
+                    new Date(System.currentTimeMillis())));
+            repository.save(new AuctionItem("item 4", "description of item 4", 250,
+                    "USD", new Time(System.currentTimeMillis()), new Time(System.currentTimeMillis() + 3600000),
+                    new Date(System.currentTimeMillis())));
+            repository.save(new AuctionItem("item 5", "description of item 5", 3,
+                    "USD", new Time(System.currentTimeMillis()), new Time(System.currentTimeMillis() + 3600000),
+                    new Date(System.currentTimeMillis())));
 
             // fetch all customers
-            log.info("Customers found with findAll():");
+            log.info("items found with findAll():");
             log.info("-------------------------------");
-            for (Customer customer : repository.findAll()) {
-                log.info(customer.toString());
+            for (AuctionItem auctionItem : repository.findAll()) {
+                log.info(auctionItem.toString());
             }
             log.info("");
 
             // fetch an individual customer by ID
-            Customer customer = repository.findById(1L);
-            log.info("Customer found with findById(1L):");
+            Optional<AuctionItem> auctionItem = repository.findById(1L);
+            log.info("item found with findById(1L):");
             log.info("--------------------------------");
-            log.info(customer.toString());
-            log.info("");
-
-            // fetch customers by last name
-            log.info("Customer found with findByLastName('Bauer'):");
-            log.info("--------------------------------------------");
-            repository.findByLastName("Bauer").forEach(bauer -> {
-                log.info(bauer.toString());
-            });
-            // for (Customer bauer : repository.findByLastName("Bauer")) {
-            //  log.info(bauer.toString());
-            // }
+            log.info(auctionItem.toString());
             log.info("");
         };
+    }
 }
