@@ -1,4 +1,4 @@
-package se.ah.auctionservice;
+package se.ah.auctionservice.JPAEntities;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,6 +2,8 @@ package se.ah.auctionservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.ah.auctionservice.JPAEntities.AuctionItem;
+import se.ah.auctionservice.Repositories.AuctionItemRepository;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -28,7 +30,7 @@ public class AuctionItemServiceImpl implements AuctionItemService {
     }
 
     @Override
-    public void removeAuctionItemById(long id) {
+    public void deleteAuctionItemById(long id) {
         repository.deleteById(id);
     }
 
