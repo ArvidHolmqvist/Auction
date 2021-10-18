@@ -35,13 +35,12 @@ public class AuctionItemController {
 
     @PostMapping("/AuctionItems")
     public ResponseEntity<AuctionItem> addAuctionItem(@RequestBody AuctionItem item){
-        System.out.println(item);
         service.addAuctionItem(item);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    @DeleteMapping("/AuctionItems")
-    public ResponseEntity<AuctionItem> deleteAuctionItemByID(@RequestParam long id){
+    @DeleteMapping("/AuctionItems/{id}")
+    public ResponseEntity<AuctionItem> deleteAuctionItemByID(@PathVariable long id){
         service.deleteAuctionItemById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

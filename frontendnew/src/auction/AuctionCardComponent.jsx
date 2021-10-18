@@ -11,7 +11,7 @@ import {
     MDBRipple
 } from "mdb-react-ui-kit";
 
-export default function AuctionComponent(props) {
+export default function AuctionCardComponent(props) {
     const [id,setId] = useState(0);
     const [name,setName] = useState("name");
     const [desc,setDesc] = useState("desc");
@@ -47,8 +47,8 @@ export default function AuctionComponent(props) {
             </MDBRipple>
             <MDBCardBody>
                 <MDBCardTitle tag="h5">{props.name}</MDBCardTitle>
-                <MDBCardText>
-                    {props.description}
+                <MDBCardText className='text-left'>
+                    {props.currentPrice + " " + props.currency}
                 </MDBCardText>
                 <MDBBtn color="primary" size="md">
                     Bid

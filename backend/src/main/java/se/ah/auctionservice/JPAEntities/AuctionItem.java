@@ -8,6 +8,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "auction_items" )
@@ -32,21 +35,30 @@ public class AuctionItem {
 
     @Column
     @Getter @Setter
+    private double current_price;
+
+    @Column
+    @Getter @Setter
     private String currency;
 
     @Column
     @Getter @Setter
-    private Timestamp start_time;
+    private long start_time;
 
     @Column
     @Getter @Setter
-    private Timestamp end_time;
+    private long end_time;
 
-    public AuctionItem(String name, String description, double startPrice, String currency, Timestamp startTime,
-                       Timestamp endTime) {
+    @Transient
+    private List<Bidder> bidders = new ArrayList<>();
+
+
+    public AuctionItem(String name, String description, double startPrice, double current_price, String currency, long startTime,
+                       long endTime) {
         this.name = name;
         this.description = description;
         this.start_price = startPrice;
+        this.current_price = current_price;
         this.currency = currency;
         this.start_time = startTime;
         this.end_time = endTime;
@@ -56,7 +68,8 @@ public class AuctionItem {
     }
 
     public boolean isActive() {
-        return Time.valueOf(LocalTime.now()).before(end_time);
+        //return Time.valueOf(LocalTime.now()).before(end_time);
+        return ZonedDateTime.now().toInstant().toEpochMilli() < end_time;
     }
 
     @Override

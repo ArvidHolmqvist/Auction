@@ -32,19 +32,20 @@ public class AuctionServiceApplication {
         return (args) -> {
 
 
-
+            /*
             service.addAuctionItem(new AuctionItem("item 1", "description of item 1", 100,
-                    "USD", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()),
-                    Timestamp.valueOf(ZonedDateTime.now().plusMinutes(60).toLocalDateTime())));
+                    "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
+                    ZonedDateTime.now().plusMinutes(30).toInstant().toEpochMilli()));
             service.addAuctionItem(new AuctionItem("item 2", "description of item 2", 51,
-                    "USD", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()),
-                    Timestamp.valueOf(ZonedDateTime.now().plusMinutes(30).toLocalDateTime())));
+                    "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
+                    ZonedDateTime.now().plusMinutes(10).toInstant().toEpochMilli()));
             service.addAuctionItem(new AuctionItem("item 3", "description of item 3", 32,
-                    "USD", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()),
-                    Timestamp.valueOf(ZonedDateTime.now().plusMinutes(10).toLocalDateTime())));
-            service.addAuctionItem(new AuctionItem("item 4", "description of item 4", 2000,
-                    "USD", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()),
-                    Timestamp.valueOf(ZonedDateTime.now().plusMinutes(180).toLocalDateTime())));
+                    "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
+                    ZonedDateTime.now().plusMinutes(60).toInstant().toEpochMilli()));
+             */
+            service.addAuctionItem(new AuctionItem("item 3", "description of item 4", 2000, 2000,
+                    "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
+                    ZonedDateTime.now().plusMinutes(5).toInstant().toEpochMilli()));
 
 
             // fetch all customers
@@ -56,20 +57,14 @@ public class AuctionServiceApplication {
             log.info("");
 
             AuctionItem a = new AuctionItem("item 1", "description of item 1", 100,
-                    "USD", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()),
-                    Timestamp.valueOf(ZonedDateTime.now().plusMinutes(60).toLocalDateTime()));
+                    100, "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
+                    ZonedDateTime.now().plusMinutes(40).toInstant().toEpochMilli());
 
-            AuctionItem b = new AuctionItem("item 1", "description of item 1", 100,
-                    "USD", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()),
-                    Timestamp.valueOf(ZonedDateTime.now().plusMinutes(60).toLocalDateTime()));
+            AuctionItem b = new AuctionItem("item 2", "description of item 1", 100,
+                    100, "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
+                    ZonedDateTime.now().plusMinutes(15).toInstant().toEpochMilli());
 
             service.addAuctionItem(a);
-
-
-
-            for (AuctionItem item : service.getAllAuctionItems()){
-                service.deleteAuctionItemById(item.getId());
-            }
         };
     }
 }

@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 class AuctionDataService {
-    getAllAuctionItems() {
-        return axios.get(`http://localhost:4567/AuctionItems`);
+    getAllActiveAuctionItems() {
+        return axios.get(`http://localhost:4567/AuctionItems`,{ params: { isActive: true } });
     }
 
     createAuctionItem(auctionItem) {
-        return axios.post(`http://localhost:4567/AuctionItems`,auctionItem);
+        console.log(auctionItem)
+        return axios.post(`http://localhost:4567/AuctionItems`, auctionItem);
     }
 
 }
