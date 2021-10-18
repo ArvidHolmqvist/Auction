@@ -9,9 +9,8 @@ import se.ah.auctionservice.JPAServices.AuctionItemService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api")
 public class AuctionItemController {
     AuctionItemService service;
 
@@ -20,12 +19,7 @@ public class AuctionItemController {
         this.service = service;
     }
 
-    @GetMapping("/AuctionItems/all")
-    public ResponseEntity<List<AuctionItem>> getAllAuctionItems(){
-        return new ResponseEntity<>(service.getAllAuctionItems(), HttpStatus.OK) ;
-    }
-
-    @GetMapping("/AuctionItems/boolean")
+    @GetMapping("/AuctionItems")
     public ResponseEntity<List<AuctionItem>> getAllActiveAuctionItems(@RequestParam boolean isActive){
         if (isActive){
             return new ResponseEntity<>(service.getAllActiveAuctionItems(), HttpStatus.OK);
@@ -41,6 +35,7 @@ public class AuctionItemController {
 
     @PostMapping("/AuctionItems")
     public ResponseEntity<AuctionItem> addAuctionItem(@RequestBody AuctionItem item){
+        System.out.println(item);
         service.addAuctionItem(item);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
@@ -50,16 +45,4 @@ public class AuctionItemController {
         service.deleteAuctionItemById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

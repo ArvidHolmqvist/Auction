@@ -28,7 +28,7 @@ public class AuctionItem {
 
     @Column
     @Getter @Setter
-    private double start_Price;
+    private double start_price;
 
     @Column
     @Getter @Setter
@@ -36,27 +36,27 @@ public class AuctionItem {
 
     @Column
     @Getter @Setter
-    private Timestamp start_Time;
+    private Timestamp start_time;
 
     @Column
     @Getter @Setter
-    private Timestamp end_Time;
+    private Timestamp end_time;
 
     public AuctionItem(String name, String description, double startPrice, String currency, Timestamp startTime,
                        Timestamp endTime) {
         this.name = name;
         this.description = description;
-        this.start_Price = startPrice;
+        this.start_price = startPrice;
         this.currency = currency;
-        this.start_Time = startTime;
-        this.end_Time = endTime;
+        this.start_time = startTime;
+        this.end_time = endTime;
     }
 
     public AuctionItem() {
     }
 
     public boolean isActive() {
-        return Time.valueOf(LocalTime.now()).before(end_Time);
+        return Time.valueOf(LocalTime.now()).before(end_time);
     }
 
     @Override
@@ -65,10 +65,10 @@ public class AuctionItem {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", startPrice=" + start_Price +
+                ", startPrice=" + start_price +
                 ", currency='" + currency + '\'' +
-                ", startTime=" + start_Time +
-                ", endTime=" + end_Time +
+                ", startTime=" + start_time +
+                ", endTime=" + end_time +
                 '}';
     }
 }
