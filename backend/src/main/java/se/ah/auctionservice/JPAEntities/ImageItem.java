@@ -12,11 +12,11 @@ public class ImageItem {
     @Column
     @Getter @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long imageID;
+    private long image_id;
 
     @Column
     @Getter @Setter
-    private long itemID;
+    private long auction_id;
 
     @Column
     @Getter @Setter

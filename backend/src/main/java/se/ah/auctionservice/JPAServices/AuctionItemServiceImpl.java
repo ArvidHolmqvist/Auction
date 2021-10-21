@@ -47,19 +47,4 @@ public class AuctionItemServiceImpl implements AuctionItemService {
         return repository.findAll();
     }
 
-    @Override
-    public List<AuctionItem> getAllActiveAuctionItems() {
-        return repository.findAll()
-                .stream()
-                .filter(AuctionItem::isActive)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AuctionItem> getAllInactiveAuctionItems() {
-        return repository.findAll()
-                .stream()
-                .filter(Predicate.not(AuctionItem::isActive))
-                .collect(Collectors.toList());
-    }
 }

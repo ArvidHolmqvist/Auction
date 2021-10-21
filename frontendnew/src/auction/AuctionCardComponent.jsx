@@ -12,48 +12,65 @@ import {
 } from "mdb-react-ui-kit";
 
 export default function AuctionCardComponent(props) {
-    const [id,setId] = useState(0);
-    const [name,setName] = useState("name");
-    const [desc,setDesc] = useState("desc");
-    const [endDate,setEndDate] = useState(new Date());
+    const [currentPrice,setCurrentPrice] = useState(0.0);
+    const [timeLeft,setTimeLeft] = useState(0.0);
 
     useEffect(() => {
-    }, []);
+        const timer = setTimeout(() => {
+            setTimeLeft(getTimeLeft());
+        },1000);
+    });
 
     const updateAuctionItem = () => {
-        let auctionItem = {
-            id: 0,
-            name: "test",
-            description: "desc",
-            start_price: 1.0,
-            currency: "USD",
-            start_time: Date.now(),
-            end_time: new Date("12/12/2021 16:00:00").getTime()
+
+    }
+
+    const getTimeLeft = () => {
+        let timeLeft = props.endTime - Date.now();
+        let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        if (timeLeft < 0) {
+            return "Expired";
         }
 
-        AuctionDataService.createAuctionItem(auctionItem).then(r =>
-            AuctionDataService.getAllActiveAuctionItems()
-        );
+        if(days > 0){
+            return days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        }
+
+        if(hours > 0){
+            return hours + "h " + minutes + "m " + seconds + "s ";
+        }
+
+        if(minutes > 0){
+            return minutes + "m " + seconds + "s ";
+        }
+
+        return seconds + "s ";
+
     }
+
+
 
     return (
         <MDBCard style={{ maxWidth: '20rem', maxHeight: '40rem' }}>
-            <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
-                <MDBCardImage src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="MDBCard image cap" top hover
-                              overlay="white-slight" />
-                <a>
-                    <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-                </a>
-            </MDBRipple>
+            <MDBCardImage src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="MDBCard image cap" top hover
+                          overlay="white-slight" />
+            <a>
+                <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
+            </a>
             <MDBCardBody>
                 <MDBCardTitle tag="h5">{props.name}</MDBCardTitle>
                 <MDBCardText className='text-left'>
-                    {props.currentPrice + " " + props.currency}
+                    {currentPrice + " " + props.currency}
                 </MDBCardText>
                 <MDBBtn color="primary" size="md">
                     Bid
                 </MDBBtn>
             </MDBCardBody>
+            <MDBCardFooter>{timeLeft}</MDBCardFooter>
         </MDBCard>
     )
 }

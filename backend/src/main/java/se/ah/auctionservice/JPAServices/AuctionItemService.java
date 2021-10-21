@@ -10,6 +10,4 @@ public interface AuctionItemService {
     void deleteAuctionItemById(long id);
     void updateAuctionItemById(long id, AuctionItem item);
     List<AuctionItem> getAllAuctionItems();
-    List<AuctionItem> getAllActiveAuctionItems();
-    List<AuctionItem> getAllInactiveAuctionItems();
 }

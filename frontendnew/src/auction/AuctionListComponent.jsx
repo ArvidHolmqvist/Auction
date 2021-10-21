@@ -19,20 +19,6 @@ export default function AuctionListComponent(props) {
             )
     }
 
-    const getTimeLeft = (endTime) => {
-        let timeLeft = endTime - Date.now();
-        let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-        if (timeLeft < 0) {
-            return "Expired";
-        }
-
-        return days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-    }
-
     return (
         <MDBCardGroup>
             {auctionItems.map(

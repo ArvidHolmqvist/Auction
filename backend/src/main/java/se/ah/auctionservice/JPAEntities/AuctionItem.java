@@ -50,6 +50,7 @@ public class AuctionItem {
     private long end_time;
 
     @Transient
+    @Getter @Setter
     private List<Bidder> bidders = new ArrayList<>();
 
 

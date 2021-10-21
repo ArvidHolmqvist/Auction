@@ -15,22 +15,24 @@ CREATE TABLE Auction_Items (
     current_price FLOAT8 NOT NULL,
     currency TEXT REFERENCES Currencies,
     start_time BIGINT NOT NULL,
-    end_time BIGINT NOT NULL,
+    end_time BIGINT NOT NULL
 );
 
 CREATE TABLE Images (
-    imageID BIGINT PRIMARY KEY,
-    itemID BIGINT REFERENCES Auction_Items(id),
-    image BYTEA
+    auction_id BIGINT,
+    image BYTEA,
+    image_id BIGINT,
+    PRIMARY KEY (auction_id, image)
 );
 
 CREATE TABLE Bidders (
-    name TEXT NOT NULL,
-    auction_item BIGINT REFERENCES Auction_Items(id),
+    name TEXT,
+    auction_id BIGINT,
     bid FLOAT8 NOT NULL,
-    PRIMARY KEY (name,auction_item)
-)
+    date BIGINT NOT NULL,
+    PRIMARY KEY (name,auction_id)
+);
 
 
 
-insert into currencies values ('USD');
+insert into Currencies values ('USD');

@@ -20,12 +20,8 @@ public class AuctionItemController {
     }
 
     @GetMapping("/AuctionItems")
-    public ResponseEntity<List<AuctionItem>> getAllActiveAuctionItems(@RequestParam boolean isActive){
-        if (isActive){
-            return new ResponseEntity<>(service.getAllActiveAuctionItems(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(service.getAllInactiveAuctionItems(), HttpStatus.OK);
-        }
+    public ResponseEntity<List<AuctionItem>> getAllActiveAuctionItems(){
+        return new ResponseEntity<>(service.getAllAuctionItems(), HttpStatus.OK);
     }
 
     @GetMapping("/AuctionItems/{id}")
