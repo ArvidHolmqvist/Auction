@@ -11,26 +11,26 @@ CREATE TABLE Auction_Items (
     id BIGINT PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    start_price FLOAT8 NOT NULL,
-    current_price FLOAT8 NOT NULL,
+    startPrice FLOAT8 NOT NULL,
+    currentPrice FLOAT8 NOT NULL,
     currency TEXT REFERENCES Currencies,
-    start_time BIGINT NOT NULL,
-    end_time BIGINT NOT NULL
+    startTime BIGINT NOT NULL,
+    endTime BIGINT NOT NULL
 );
 
 CREATE TABLE Images (
-    auction_id BIGINT,
+    auctionID BIGINT,
     image BYTEA,
-    image_id BIGINT,
-    PRIMARY KEY (auction_id, image)
+    imageID BIGINT,
+    PRIMARY KEY (auctionID, image)
 );
 
 CREATE TABLE Bidders (
+    bidderID BIGINT PRIMARY KEY,
     name TEXT,
-    auction_id BIGINT,
+    auctionID BIGINT,
     bid FLOAT8 NOT NULL,
-    date BIGINT NOT NULL,
-    PRIMARY KEY (name,auction_id)
+    date BIGINT NOT NULL
 );
 
 

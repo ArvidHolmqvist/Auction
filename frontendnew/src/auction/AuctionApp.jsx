@@ -7,7 +7,6 @@ export default function AuctionApp() {
     return (
         <div>
             <AuctionListComponent></AuctionListComponent>
-            <AuctionCardComponent></AuctionCardComponent>
         </div>
     );
 }

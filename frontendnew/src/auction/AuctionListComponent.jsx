@@ -15,15 +15,22 @@ export default function AuctionListComponent(props) {
             .then(
                 (response) => {
                     setAuctionItems(response.data)
+                    console.log(auctionItems)
                 }
             )
     }
 
+    const renderCard = (auctionItem) => {
+        if(auctionItem.endTime - Date.now() >= 0){
+            return <AuctionCardComponent id={auctionItem.id} name={auctionItem.name} endTime={auctionItem.endTime} description={auctionItem.description} currentPrice={auctionItem.currentPrice} currency={auctionItem.currency}/>
+        }
+        return null
+    }
+
     return (
         <MDBCardGroup>
-            {auctionItems.map(
-                auctionItem =>
-                    <AuctionCardComponent name={auctionItem.name} endTime={auctionItem.end_time} description={auctionItem.description} currentPrice={auctionItem.current_price} currency={auctionItem.currency}/>
+            {auctionItems.map((auctionItem) =>
+                renderCard(auctionItem)
             )}
         </MDBCardGroup>
     )

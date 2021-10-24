@@ -7,7 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import se.ah.auctionservice.JPAEntities.AuctionItem;
+import se.ah.auctionservice.JPAEntities.Bidder;
 import se.ah.auctionservice.JPAServices.AuctionItemService;
+import se.ah.auctionservice.JPAServices.BidderService;
 import se.ah.auctionservice.Repositories.AuctionItemRepository;
 
 import java.sql.Date;
@@ -28,7 +30,7 @@ public class AuctionServiceApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(AuctionItemService service) {
+    public CommandLineRunner demo(AuctionItemService auctionItemService, BidderService bidderService) {
         return (args) -> {
 
 
@@ -43,7 +45,7 @@ public class AuctionServiceApplication {
                     "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
                     ZonedDateTime.now().plusMinutes(60).toInstant().toEpochMilli()));
              */
-            service.addAuctionItem(new AuctionItem("item 3", "description of item 4", 2000, 2000,
+            auctionItemService.addAuctionItem(new AuctionItem("item 3", "description of item 4", 2000, 2000,
                     "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
                     ZonedDateTime.now().plusMinutes(5).toInstant().toEpochMilli()));
 
@@ -51,7 +53,7 @@ public class AuctionServiceApplication {
             // fetch all customers
             log.info("items found with findAll():");
             log.info("-------------------------------");
-            for (AuctionItem auctionItem : service.getAllAuctionItems()) {
+            for (AuctionItem auctionItem : auctionItemService.getAllAuctionItems()) {
                 log.info(auctionItem.toString());
             }
             log.info("");
@@ -62,9 +64,19 @@ public class AuctionServiceApplication {
 
             AuctionItem b = new AuctionItem("item 2", "description of item 1", 100,
                     100, "USD", ZonedDateTime.now().toInstant().toEpochMilli(),
-                    ZonedDateTime.now().plusMinutes(15).toInstant().toEpochMilli());
+                    ZonedDateTime.now().plusMinutes(1000).toInstant().toEpochMilli());
 
-            service.addAuctionItem(a);
+            auctionItemService.addAuctionItem(a);
+            auctionItemService.addAuctionItem(b);
+
+            bidderService.addBid(new Bidder(a.getId(),"bidder 1",101,
+                    ZonedDateTime.now().toInstant().toEpochMilli()));
+            bidderService.addBid(new Bidder(a.getId(),"bidder 2",102,
+                    ZonedDateTime.now().toInstant().toEpochMilli()));
+            bidderService.addBid(new Bidder(a.getId(),"bidder 1",103,
+                    ZonedDateTime.now().toInstant().toEpochMilli()));
+
+            System.out.println(bidderService.getBiddersByAuctionID(a.getId()));
         };
     }
 }

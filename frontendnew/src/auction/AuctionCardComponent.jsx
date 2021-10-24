@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AuctionDataService from '../api/AuctionDataService.jsx'
+import AuctionDataService from "../api/AuctionDataService";
 import {
     MDBBtn,
     MDBCard,
@@ -12,7 +12,8 @@ import {
 } from "mdb-react-ui-kit";
 
 export default function AuctionCardComponent(props) {
-    const [currentPrice,setCurrentPrice] = useState(0.0);
+    const [currentPrice,setCurrentPrice] = useState(props.currentPrice);
+    const [numberOfBidders,setNumberOfBidders] = useState(0);
     const [timeLeft,setTimeLeft] = useState(0.0);
 
     useEffect(() => {
@@ -49,8 +50,35 @@ export default function AuctionCardComponent(props) {
         }
 
         return seconds + "s ";
-
     }
+
+    const getBidders = () => {
+        AuctionDataService.getBiddersFromAuctionID(props.id)
+            .then(
+                (response) => {
+                    setNumberOfBidders(response.data.length)
+                }
+            )
+    }
+
+    const createBid = () => {
+        let bidder = {
+            'auctionID' : props.id,
+            'name' : 'name 1',
+            'bid' : currentPrice + 1,
+            'date' : Date.now()
+        }
+        AuctionDataService.createBid(bidder).then(
+            () => {
+                AuctionDataService.getMaxBidFromAuctionID(props.id).then(
+                    (response) => {
+                        setCurrentPrice(response.data)
+                    }
+                )
+            }
+        )
+    }
+
 
 
 
@@ -64,9 +92,12 @@ export default function AuctionCardComponent(props) {
             <MDBCardBody>
                 <MDBCardTitle tag="h5">{props.name}</MDBCardTitle>
                 <MDBCardText className='text-left'>
-                    {currentPrice + " " + props.currency}
+                    {currentPrice + " " + props.currency + " - " + numberOfBidders + " bids"}
                 </MDBCardText>
-                <MDBBtn color="primary" size="md">
+                <MDBBtn color="primary" size="md" onClick={getBidders}>
+                    Update bid
+                </MDBBtn>
+                <MDBBtn color="primary" size="md" onClick={createBid}>
                     Bid
                 </MDBBtn>
             </MDBCardBody>

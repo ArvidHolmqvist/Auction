@@ -29,40 +29,35 @@ public class AuctionItem {
     @Getter @Setter
     private String description;
 
-    @Column
+    @Column(name="startPrice")
     @Getter @Setter
-    private double start_price;
+    private double startPrice;
 
-    @Column
+    @Column(name="currentPrice")
     @Getter @Setter
-    private double current_price;
+    private double currentPrice;
 
     @Column
     @Getter @Setter
     private String currency;
 
-    @Column
+    @Column(name="startTime")
     @Getter @Setter
-    private long start_time;
+    private long startTime;
 
-    @Column
+    @Column(name="endTime")
     @Getter @Setter
-    private long end_time;
+    private long endTime;
 
-    @Transient
-    @Getter @Setter
-    private List<Bidder> bidders = new ArrayList<>();
-
-
-    public AuctionItem(String name, String description, double startPrice, double current_price, String currency, long startTime,
+    public AuctionItem(String name, String description, double startPrice, double currentPrice, String currency, long startTime,
                        long endTime) {
         this.name = name;
         this.description = description;
-        this.start_price = startPrice;
-        this.current_price = current_price;
+        this.startPrice = startPrice;
+        this.currentPrice = currentPrice;
         this.currency = currency;
-        this.start_time = startTime;
-        this.end_time = endTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public AuctionItem() {
@@ -70,7 +65,7 @@ public class AuctionItem {
 
     public boolean isActive() {
         //return Time.valueOf(LocalTime.now()).before(end_time);
-        return ZonedDateTime.now().toInstant().toEpochMilli() < end_time;
+        return ZonedDateTime.now().toInstant().toEpochMilli() < endTime;
     }
 
     @Override
@@ -79,10 +74,10 @@ public class AuctionItem {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", startPrice=" + start_price +
+                ", startPrice=" + startPrice +
                 ", currency='" + currency + '\'' +
-                ", startTime=" + start_time +
-                ", endTime=" + end_time +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
                 '}';
     }
 }

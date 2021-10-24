@@ -1,4 +1,4 @@
-package se.ah.auctionservice;
+package se.ah.auctionservice.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,23 +19,23 @@ public class AuctionItemController {
         this.service = service;
     }
 
-    @GetMapping("/AuctionItems")
+    @GetMapping("/auctionItems")
     public ResponseEntity<List<AuctionItem>> getAllActiveAuctionItems(){
         return new ResponseEntity<>(service.getAllAuctionItems(), HttpStatus.OK);
     }
 
-    @GetMapping("/AuctionItems/{id}")
+    @GetMapping("/auctionItems/{id}")
     public ResponseEntity<AuctionItem> getAuctionItemByID(@PathVariable long id){
         return new ResponseEntity<>(service.getAuctionItemById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/AuctionItems")
+    @PostMapping("/auctionItems")
     public ResponseEntity<AuctionItem> addAuctionItem(@RequestBody AuctionItem item){
         service.addAuctionItem(item);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    @DeleteMapping("/AuctionItems/{id}")
+    @DeleteMapping("/auctionItems/{id}")
     public ResponseEntity<AuctionItem> deleteAuctionItemByID(@PathVariable long id){
         service.deleteAuctionItemById(id);
         return new ResponseEntity<>(HttpStatus.OK);

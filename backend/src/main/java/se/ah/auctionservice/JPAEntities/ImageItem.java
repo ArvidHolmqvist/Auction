@@ -9,14 +9,14 @@ import javax.persistence.*;
 @Table(name = "images" )
 public class ImageItem {
     @Id
-    @Column
+    @Column(name="imageID")
     @Getter @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long image_id;
+    private long imageID;
 
-    @Column
+    @Column(name="auctionID")
     @Getter @Setter
-    private long auction_id;
+    private long auctionID;
 
     @Column
     @Getter @Setter
