@@ -42,4 +42,15 @@ public class Bidder implements Serializable {
     public Bidder() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Bidder{" +
+                "bidderID=" + bidderID +
+                ", auctionID=" + auctionID +
+                ", name='" + name + '\'' +
+                ", bid=" + bid +
+                ", date=" + date +
+                '}';
+    }
 }

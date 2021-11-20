@@ -13,10 +13,12 @@ import java.util.List;
 @RestController
 public class AuctionItemController {
     AuctionItemService service;
+    EmitterWrapper emitterWrapper;
 
     @Autowired
-    public AuctionItemController(AuctionItemService service) {
+    public AuctionItemController(AuctionItemService service, EmitterWrapper emitterWrapper) {
         this.service = service;
+        this.emitterWrapper = emitterWrapper;
     }
 
     @GetMapping("/auctionItems")
@@ -32,12 +34,16 @@ public class AuctionItemController {
     @PostMapping("/auctionItems")
     public ResponseEntity<AuctionItem> addAuctionItem(@RequestBody AuctionItem item){
         service.addAuctionItem(item);
+        emitterWrapper.sendAuctionsMessage();
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
     @DeleteMapping("/auctionItems/{id}")
     public ResponseEntity<AuctionItem> deleteAuctionItemByID(@PathVariable long id){
         service.deleteAuctionItemById(id);
+        emitterWrapper.sendAuctionsMessage();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }

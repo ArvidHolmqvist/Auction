@@ -25,7 +25,7 @@ public class BidderServiceImpl implements BidderService {
     }
 
     @Override
-    public double findMaxBidByAuctionID(long id) {
+    public Double findMaxBidByAuctionID(long id) {
         return repository.findMaxBidByAuctionID(id);
     }
 }

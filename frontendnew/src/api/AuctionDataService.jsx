@@ -17,9 +17,15 @@ class AuctionDataService {
         return axios.post(`http://localhost:4567/bidders`, bidder);
     }
 
+    deleteAuctionItem(id) {
+        return axios.delete(`http://localhost:4567/auctionItems/${id}`)
+    }
+
     getMaxBidFromAuctionID(id) {
         return axios.get(`http://localhost:4567/bidders/bid/max/${id}`);
     }
+
+
 
 }
 

@@ -9,5 +9,5 @@ import java.util.List;
 public interface BidderRepository extends JpaRepository<Bidder, Long> {
     List<Bidder> findByAuctionID(long id);
     @Query(value = "select max(bid) from Bidders where auctionid = ?1", nativeQuery = true)
-    double findMaxBidByAuctionID(long id);
+    Double findMaxBidByAuctionID(long id);
 }

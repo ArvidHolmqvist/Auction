@@ -7,5 +7,5 @@ import java.util.List;
 public interface BidderService {
     void addBid(Bidder bidder);
     List<Bidder> getBiddersByAuctionID(long id);
-    double findMaxBidByAuctionID(long id);
+    Double findMaxBidByAuctionID(long id);
 }

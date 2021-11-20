@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.ah.auctionservice.JPAEntities.AuctionItem;
 import se.ah.auctionservice.JPAEntities.Bidder;
 import se.ah.auctionservice.JPAServices.BidderService;
 
@@ -13,11 +12,15 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class BidderController {
+
     BidderService service;
 
+    EmitterWrapper emitterWrapper;
+
     @Autowired
-    public BidderController(BidderService service) {
+    public BidderController(BidderService service, EmitterWrapper emitterWrapper) {
         this.service = service;
+        this.emitterWrapper = emitterWrapper;
     }
 
     @GetMapping("/bidders/{id}")
@@ -31,10 +34,12 @@ public class BidderController {
     }
 
     @PostMapping("/bidders")
-    public ResponseEntity<Bidder> getBiddersByAuctionID(@RequestBody Bidder bidder){
+    public ResponseEntity<Bidder> addBid(@RequestBody Bidder bidder) {
         service.addBid(bidder);
+        EmitterWrapper.sendBiddersMessage(bidder.getAuctionID());
         return new ResponseEntity<>(bidder, HttpStatus.OK);
     }
+
 
 
 }
