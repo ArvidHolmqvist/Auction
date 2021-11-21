@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuctionDataService from "../api/AuctionDataService";
+import AuctionItemModal from "./AuctionItemModal";
 import {
     MDBBtn,
     MDBCard,
@@ -9,17 +10,26 @@ import {
     MDBCardText,
     MDBCardTitle,
     MDBRipple,
-    MDBInput
+    MDBInput,
+    MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,
+    MDBTable, MDBTableHead, MDBTableBody
 } from "mdb-react-ui-kit";
 
 export default function AuctionCardComponent(props) {
     const [data, setData] = useState([]);
     let eventSource = undefined;
 
-    const [currentPrice,setCurrentPrice] = useState(props.currentPrice);
+    const [currentPrice,setCurrentPrice] = useState();
     const [bid, setBid] = useState(0);
     const [numberOfBidders,setNumberOfBidders] = useState(0);
     const [timeLeft,setTimeLeft] = useState(0.0);
+    const [modalOpen,setModalOpen] = useState(false);
 
     useEffect(() => {
         updateNumberOfBidders();
@@ -38,7 +48,6 @@ export default function AuctionCardComponent(props) {
         }
 
         eventSource.onmessage = (event) => {
-            console.log("result", event.data);
             updateNumberOfBidders();
             updateCurrentPrice();
         }
@@ -60,8 +69,8 @@ export default function AuctionCardComponent(props) {
     const setNewBid = (event) => {
         if(!isNaN(event.target.value)){
             setBid(Number(event.target.value))
-            console.log(bid)
         }
+
     };
 
     const WindowFocusHandler = () => {
@@ -141,26 +150,26 @@ export default function AuctionCardComponent(props) {
             'bid' : bid,
             'date' : Date.now()
         }
-        console.log("bid: " + bid)
         AuctionDataService.getMaxBidFromAuctionID(props.id).then(
             (response) => {
+
+            }
+        );
+        AuctionDataService.getMaxBidFromAuctionID(props.id).then(
+            (response) => {
+                console.log("hello2")
                 if (response.data < bid){
-                    console.log("HELLO")
+                    AuctionDataService.createBid(bidder).then(
+                        (response) => {
+                            setCurrentPrice(response.data.bid)
+                            setNumberOfBidders(numberOfBidders+1)
+                        }
+                    )
+                } else {
+                    updateNumberOfBidders()
+                    updateCurrentPrice()
                 }
             })
-
-        /*
-        AuctionDataService.createBid(bidder).then(
-            () => {
-                AuctionDataService.getMaxBidFromAuctionID(props.id).then(
-                    (response) => {
-                        //setCurrentPrice(response.data)
-                        console.log(response.data)
-                    }
-                )
-            }
-        )
-         */
     }
 
     const deleteBid = () => {
@@ -169,6 +178,10 @@ export default function AuctionCardComponent(props) {
                 //TODO
             }
         )
+    }
+
+    const toggleModal = () => {
+        setModalOpen(!modalOpen)
     }
 
     return (
@@ -190,6 +203,14 @@ export default function AuctionCardComponent(props) {
                 <MDBBtn color="primary" size="md" onClick={deleteBid}>
                     Remove
                 </MDBBtn>
+                <MDBBtn color="primary" size="md" onClick={toggleModal}>
+                    modal
+                </MDBBtn>
+                <MDBModal staticBackdrop show={modalOpen} tabIndex='-1'>
+                    <MDBModalDialog centered size="lg">
+                        <AuctionItemModal id={props.id} name={props.name} endTime={props.endTime} description={props.description} startPrice={props.startPrice} currency={props.currency} toggleModal={toggleModal}></AuctionItemModal>
+                    </MDBModalDialog>
+                </MDBModal>
             </MDBCardBody>
             <MDBCardFooter>{timeLeft}</MDBCardFooter>
         </MDBCard>

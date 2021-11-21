@@ -33,10 +33,6 @@ public class AuctionItem {
     @Getter @Setter
     private double startPrice;
 
-    @Column(name="currentPrice")
-    @Getter @Setter
-    private double currentPrice;
-
     @Column
     @Getter @Setter
     private String currency;
@@ -49,12 +45,11 @@ public class AuctionItem {
     @Getter @Setter
     private long endTime;
 
-    public AuctionItem(String name, String description, double startPrice, double currentPrice, String currency, long startTime,
+    public AuctionItem(String name, String description, double startPrice, String currency, long startTime,
                        long endTime) {
         this.name = name;
         this.description = description;
         this.startPrice = startPrice;
-        this.currentPrice = currentPrice;
         this.currency = currency;
         this.startTime = startTime;
         this.endTime = endTime;

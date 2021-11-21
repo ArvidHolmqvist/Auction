@@ -50,16 +50,20 @@ export default function AuctionListComponent(props) {
 
     const renderCard = (auctionItem) => {
         if(auctionItem.endTime - Date.now() >= 0){
-            return <AuctionCardComponent id={auctionItem.id} name={auctionItem.name} endTime={auctionItem.endTime} description={auctionItem.description} currentPrice={auctionItem.currentPrice} currency={auctionItem.currency}/>
+            return <AuctionCardComponent id={auctionItem.id} name={auctionItem.name} endTime={auctionItem.endTime} description={auctionItem.description} startPrice={auctionItem.startPrice} currency={auctionItem.currency}/>
         }
         return null
     }
 
     return (
-        <MDBCardGroup>
-            {auctionItems.map((auctionItem) =>
-                renderCard(auctionItem)
-            )}
-        </MDBCardGroup>
+        <div>
+            <MDBCardGroup>
+                {auctionItems.map((auctionItem) =>
+                    <div key={auctionItem.id}>{renderCard(auctionItem)}</div>
+                )}
+            </MDBCardGroup>
+        </div>
+
+
     )
 }

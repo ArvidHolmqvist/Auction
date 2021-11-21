@@ -31,7 +31,6 @@ export default function App() {
             'name' : 'item: ' + Math.floor(Math.random() * 100000),
             'description' : 'generic description',
             'startPrice' : price,
-            'currentPrice' : price,
             'currency' : 'USD',
             'startTime' : Date.now(),
             'endTime' : Date.now() + endTime

@@ -1,5 +1,6 @@
 package se.ah.auctionservice.JPAServices;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.ah.auctionservice.JPAEntities.Bidder;
 import se.ah.auctionservice.Repositories.BidderRepository;
@@ -10,13 +11,20 @@ import java.util.List;
 public class BidderServiceImpl implements BidderService {
     BidderRepository repository;
 
-    public BidderServiceImpl(BidderRepository repository) {
+    AuctionItemService auctionItemService;
+
+    public BidderServiceImpl(BidderRepository repository, AuctionItemService auctionItemService) {
         this.repository = repository;
+        this.auctionItemService = auctionItemService;
+
     }
 
     @Override
     public void addBid(Bidder bidder) {
-        repository.save(bidder);
+        var highestBid = findMaxBidByAuctionID(bidder.getAuctionID());
+        if (highestBid == null && bidder.getBid() > auctionItemService.getAuctionItemById(bidder.getAuctionID()).getStartPrice() || highestBid != null && bidder.getBid() > highestBid){
+            repository.save(bidder);
+        }
     }
 
     @Override
@@ -26,6 +34,11 @@ public class BidderServiceImpl implements BidderService {
 
     @Override
     public Double findMaxBidByAuctionID(long id) {
-        return repository.findMaxBidByAuctionID(id);
+        var maxBid = repository.findMaxBidByAuctionID(id);
+        if (maxBid == null){
+            System.out.println("findMaxBidByAuctionID");
+            return auctionItemService.getAuctionItemById(id).getStartPrice();
+        }
+        return maxBid;
     }
 }

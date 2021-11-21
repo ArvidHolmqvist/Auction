@@ -30,11 +30,13 @@ public class BidderController {
 
     @GetMapping("/bidders/bid/max/{id}")
     public ResponseEntity<Double> getMaxBidFromAuctionID(@PathVariable long id){
+        System.out.println("getMaxBidFromAuctionID");
         return new ResponseEntity<>(service.findMaxBidByAuctionID(id), HttpStatus.OK);
     }
 
     @PostMapping("/bidders")
     public ResponseEntity<Bidder> addBid(@RequestBody Bidder bidder) {
+        System.out.println("addBid");
         service.addBid(bidder);
         EmitterWrapper.sendBiddersMessage(bidder.getAuctionID());
         return new ResponseEntity<>(bidder, HttpStatus.OK);
