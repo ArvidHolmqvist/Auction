@@ -22,4 +22,9 @@ public class ImageItem {
     @Getter @Setter
     @Lob
     private byte[] image;
+
+    public ImageItem(long auctionID, byte[] image) {
+        this.auctionID = auctionID;
+        this.image = image;
+    }
 }

@@ -68,7 +68,8 @@ export default function App() {
                         <MDBNavbarItem>
                             <MDBNavbarLink href='#'>Link</MDBNavbarLink>
                         </MDBNavbarItem>
-
+                        <label htmlFor="formFileMultiple" className="form-label">Multiple files input example</label>
+                        <input className="form-control" type="file" id="formFileMultiple" multiple/>
                         <MDBNavbarItem>
                             <MDBDropdown>
                                 <MDBDropdownToggle tag='a' className='nav-link'>
